@@ -27,9 +27,10 @@ import { queryGsc } from "@/lib/tools/gsc";
  * next week's pass.
  */
 
-// 5 minutes is plenty for a weekly batch — dozens of articles at most
-// in MVP. Sequential GSC calls keep the per-article diagnostics simple.
-export const maxDuration = 300;
+// Vercel Hobby caps Cron Jobs at 60s. That's enough for a weekly batch
+// of a handful of articles (1 GSC call each). If the published-articles
+// table outgrows the 60s budget we batch via offset + early-return.
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 interface ArticleRow {

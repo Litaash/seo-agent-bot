@@ -342,20 +342,18 @@ sequenceDiagram
 ```json
 // vercel.json
 {
-  "crons": [{ "path": "/api/cron/weekly-check", "schedule": "0 9 * * 1" }],
-  "functions": {
-    "app/api/cron/weekly-check/route.ts": { "maxDuration": 300 }
-  }
+  "crons": [{ "path": "/api/cron/weekly-check", "schedule": "0 9 * * 1" }]
 }
 ```
 
 - Розклад: щопонеділка о 9:00 UTC.
 - Захист: `Authorization: Bearer ${CRON_SECRET}` перевіряється у route handler. Vercel Cron автоматично додає цей заголовок при наявності env-змінної `CRON_SECRET`.
+- `maxDuration` оголошено в самому route file (`60s` — стеля для Cron Jobs на Hobby).
 - Логіка ([`lib/agents/evaluator.ts`](../lib/agents/evaluator.ts)):
   1. Беремо всі `articles` з `published_at < now() - 7 days`
   2. Для кожної дзвонимо GSC API → оновлюємо `gsc_position`, `gsc_clicks`, `gsc_impressions`
   3. Якщо `gsc_position > 20` — створюємо нову `tasks` з префіксом `re-optimize: <title>`
-  4. Лімітуємо до N статей за пробіг, щоб не перевищити `maxDuration: 300`
+  4. Лімітуємо до N статей за пробіг, щоб уписатись у 60-секундний бюджет
 
 ---
 

@@ -19,10 +19,14 @@ import { createTaskStream, SSE_HEADERS } from "@/lib/api/sse";
  * abstraction handles both.
  */
 
-// Vercel Hobby caps Serverless Functions at 300s. The client reopens
-// the EventSource via the Replay button if a long-running task hits
-// the cutoff before the orchestrator finishes.
-export const maxDuration = 300;
+// Vercel Hobby caps STREAMING (text/event-stream) responses at 60s,
+// distinct from the 300s ceiling for regular JSON responses. The
+// orchestrator itself runs in `/api/agent/run` (non-streaming) up to
+// its 4-min internal timeout, so we just keep this SSE replay short
+// and let the client's `Replay` button reopen a fresh EventSource if
+// the run hasn't finished yet. EventSource auto-reconnects on
+// transport errors anyway.
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 const UUID_RE =
