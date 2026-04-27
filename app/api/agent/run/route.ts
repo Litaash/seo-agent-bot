@@ -25,10 +25,11 @@ import {
  * page reload.
  */
 
-// The orchestrator is hard-capped at 5 minutes by `RUN_TIMEOUT_MS`.
-// We give the route a tiny bit of headroom so the SSE stream can flush
-// the final `done` / `error` frame after the orchestrator settles.
-export const maxDuration = 320;
+// Vercel Hobby caps Serverless Functions at 300s. The orchestrator's
+// own `RUN_TIMEOUT_MS` is set to 4 minutes so our `AbortSignal` fires
+// ~60s before the platform kill — that buffer lets the SSE stream
+// flush a final `done` / `error` frame after the agent settles.
+export const maxDuration = 300;
 
 export const dynamic = "force-dynamic";
 

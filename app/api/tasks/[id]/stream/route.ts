@@ -19,8 +19,10 @@ import { createTaskStream, SSE_HEADERS } from "@/lib/api/sse";
  * abstraction handles both.
  */
 
-// Long enough to outlive a 5-minute orchestrator run with headroom.
-export const maxDuration = 360;
+// Vercel Hobby caps Serverless Functions at 300s. The client reopens
+// the EventSource via the Replay button if a long-running task hits
+// the cutoff before the orchestrator finishes.
+export const maxDuration = 300;
 export const dynamic = "force-dynamic";
 
 const UUID_RE =

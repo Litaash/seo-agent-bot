@@ -111,7 +111,7 @@ seo-agent-bot/
 2. **Step count cap** — `MAX_STEPS = 20` (orchestrator: 8)
 3. **Token budget** — `MAX_TOTAL_TOKENS = 50_000`
 4. **Loop detection** — однакова `(tool, args)` пара 3 рази → stop
-5. **Wall-clock timeout** — `RUN_TIMEOUT_MS = 5 хв` через `AbortSignal`
+5. **Wall-clock timeout** — `RUN_TIMEOUT_MS = 4 хв` через `AbortSignal` (під Vercel Hobby 300s)
 
 Плюс safety net на рівні Google Cloud — email-alerts у Billing при 50/90/100% від $10.
 

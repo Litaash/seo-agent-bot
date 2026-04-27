@@ -33,8 +33,14 @@ export const MAX_TOTAL_TOKENS = 50_000;
  */
 export const LOOP_REPEAT_THRESHOLD = 3;
 
-/** Wall-clock timeout for an entire orchestrator run (5 minutes). */
-export const RUN_TIMEOUT_MS = 5 * 60 * 1000;
+/**
+ * Wall-clock timeout for an entire orchestrator run (4 minutes).
+ *
+ * Sized below Vercel's Hobby-plan 300s Function `maxDuration` so our
+ * `AbortSignal` fires first and we can flush a final SSE frame before
+ * the platform kills the request.
+ */
+export const RUN_TIMEOUT_MS = 4 * 60 * 1000;
 
 /**
  * Default per-task cost ceiling. Generous headroom over the ~$0.03 expected

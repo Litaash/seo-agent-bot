@@ -189,7 +189,7 @@ flowchart TB
     L2 -->|"no"| Stop2[Stop: token budget]
     L2 -->|"yes"| L3{"Same tool+args repeated 3 times?"}
     L3 -->|"yes"| Stop3[Stop: loop detected]
-    L3 -->|"no"| L4{"Wall clock < 5 min?"}
+    L3 -->|"no"| L4{"Wall clock < 4 min?"}
     L4 -->|"no"| Stop4[AbortSignal: timeout]
     L4 -->|"yes"| L5{"hasToolCall save_draft?"}
     L5 -->|"yes"| Stop5[Stop: success]
@@ -202,7 +202,7 @@ flowchart TB
 | 1 | Step count cap | `stepCountIs(MAX_STEPS=20)`; для оркестратора `maxSteps: 8` |
 | 2 | Token budget | `tokenBudgetIs(MAX_TOTAL_TOKENS=50_000)` |
 | 3 | Loop detection | `detectLoop(threshold=3)`, ключ — `(toolName, stableStringify(input))` |
-| 4 | Wall-clock timeout | `runTimeoutSignal(RUN_TIMEOUT_MS=5min)` → `AbortSignal` |
+| 4 | Wall-clock timeout | `runTimeoutSignal(RUN_TIMEOUT_MS=4min)` → `AbortSignal` (под Hobby 300s) |
 | 5 | Final-tool stop | `hasToolCall("save_draft")` → run закінчується одразу після успіху |
 | (+) | Google Cloud email-alerts | 50% / 90% / 100% від $10 — поза кодом, як safety net |
 

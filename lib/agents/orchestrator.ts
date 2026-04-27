@@ -98,7 +98,7 @@ export interface RunOrchestratorInput {
   voice?: string;
   /**
    * Optional override for the run's wall-clock timeout. Defaults to
-   * `RUN_TIMEOUT_MS` (5 minutes).
+   * `RUN_TIMEOUT_MS` (4 minutes — sized under Vercel Hobby's 300s cap).
    */
   timeoutMs?: number;
 }
