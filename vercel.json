@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "path": "/api/cron/weekly-check",
+      "schedule": "0 9 * * 1"
+    }
+  ],
+  "functions": {
+    "app/api/cron/weekly-check/route.ts": {
+      "maxDuration": 300
+    }
+  }
+}
